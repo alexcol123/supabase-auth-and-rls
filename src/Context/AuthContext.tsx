@@ -7,6 +7,7 @@ import {
 } from "react";
 import supabase from "../supabaseClient";
 
+
 const AuthContext = createContext(null);
 
 export const AuthContextProvider = ({
@@ -18,10 +19,7 @@ export const AuthContextProvider = ({
   const [loading, setloading] = useState(false);
 
   //https://supabase.com/docs/reference/javascript/auth-signup
-  const { data, error } = await supabase.auth.signUp({
-    email: "example@email.com",
-    password: "example-password",
-  });
+
 
   const signUpNewUser = async (
     email: string,
@@ -37,4 +35,16 @@ export const AuthContextProvider = ({
       {children}
     </AuthContext.Provider>
   );
+};
+
+// 4. The hook
+export const UserAuth = () => {
+  const context = useContext(AuthContext);
+
+  // This check is great! It acts as a Type Guard.
+  if (!context) {
+    throw new Error("UserAuth must be used within an AuthContextProvider");
+  }
+
+  return context;
 };
