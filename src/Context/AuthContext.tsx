@@ -7,6 +7,13 @@ import {
 } from "react";
 import supabase from "../supabaseClient";
 
+// interface User {
+//   id: string;
+//   email: string;
+//   firstName: string;
+//   lastName: string;
+//   role: "user" | "admin";
+// }
 
 const AuthContext = createContext(null);
 
@@ -20,15 +27,31 @@ export const AuthContextProvider = ({
 
   //https://supabase.com/docs/reference/javascript/auth-signup
 
-
   const signUpNewUser = async (
     email: string,
     password: string,
     firstName: string,
     lastName: string,
   ) => {
-    console.log( 'data recieved in auth ,',firstName, lastName, email, password)
-    return { success: true };
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          first_name: firstName,
+          last_name: lastName,
+        },
+      },
+    });
+
+    if (error) {
+      console.error("Error signing up:", error.message);
+      return { success: false, error: error.message };
+    }
+    console.log("--------------------------------");
+    console.log(data);
+
+    return { success: true, data };
   };
 
   return (

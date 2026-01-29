@@ -3,11 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../Context/AuthContext";
 
 const SignUp = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const { signUpNewUser } = UserAuth();
-
-
 
   const [isLoading, setIsLoading] = useState(false);
   const [firstName, setFirstName] = useState("Alex");
@@ -21,24 +19,28 @@ const SignUp = () => {
     setIsLoading(true);
     setError("");
 
-
-    const resp  = await signUpNewUser(email, password, firstName, lastName);
-    console.log(resp)
-    // try {
-    //   const result = await signUpNewUser(email, password, firstName, lastName);
-
-    //   if (!result.success) {
-    //     setError(result.error || "An unknown error occurred");
-    //   }
-    //   if (result.success) {
-    //     navigate("/dashboard");
-    //   }
-    // } catch {
-    //   setError("An unexpected error occurred");
-    // } finally {
-    //   setIsLoading(false);
-    // }
+    try {
+      const resp = await signUpNewUser(email, password, firstName, lastName);
+      console.log(resp);
+    } catch {
+      console.log("Error login in, client");
+    }
   };
+
+  // try {
+  //   const result = await signUpNewUser(email, password, firstName, lastName);
+
+  //   if (!result.success) {
+  //     setError(result.error || "An unknown error occurred");
+  //   }
+  //   if (result.success) {
+  //     navigate("/dashboard");
+  //   }
+  // } catch {
+  //   setError("An unexpected error occurred");
+  // } finally {
+  //   setIsLoading(false);
+  // }
 
   return (
     <div className="min-h-screen flex items-center justify-center">
