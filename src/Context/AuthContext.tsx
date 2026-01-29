@@ -27,6 +27,7 @@ export const AuthContextProvider = ({
     firstName: string,
     lastName: string,
   ) => {
+    console.log( 'data recieved in auth ,',firstName, lastName, email, password)
     return { success: true };
   };
 
