@@ -1,14 +1,41 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import supabase from "../supabaseClient";
 
-const AuthContext = createContext(null);
+interface AuthContextTypes {
+  session: User;
+  loading: boolean;
+  signUpNewUser: (
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+  ) => Promise<SignupResult>;
+  signIn: (email: string, password: string) => Promise<SignupResult>;
+  signOut: () => Promise<void>;
+}
+
+type User = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  id: string;
+} | null;
+
+interface SignupResult {
+  success: boolean;
+  error?: string;
+  data?: unknown;
+}
+
+const AuthContext = createContext<AuthContextTypes | null>(null);
 
 export const AuthContextProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  const [session, setSession] = useState<User | null>(null);
+  const [session, setSession] = useState<User>(null);
+
   const [loading, setLoading] = useState(true);
 
   const signUpNewUser = async (
@@ -16,7 +43,7 @@ export const AuthContextProvider = ({
     password: string,
     firstName: string,
     lastName: string,
-  ) => {
+  ): Promise<SignupResult> => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -34,13 +61,16 @@ export const AuthContextProvider = ({
     return { success: true, data };
   };
 
-  const signIn = async (email: string, password: string) => {
+  const signIn = async (
+    email: string,
+    password: string,
+  ): Promise<SignupResult> => {
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
-    console.log(data);
+    // console.log(data);
     if (error) {
       console.error("Error signing in:", error.message);
       return { success: false, error: error.message };
@@ -73,6 +103,64 @@ export const AuthContextProvider = ({
    * 3. User navigates away → cleanup runs → isMounted = false
    * 4. Async finishes → checks isMounted → false → skips setState ✓
    */
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const initSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!isMounted) return;
+
+      // console.log(session)
+
+      if (session?.user) {
+        const userData = session.user;
+
+        // console.log(userData);
+
+        const user: User = {
+          firstName: userData.user_metadata.first_name,
+          lastName: userData.user_metadata.last_name,
+          email: userData.user_metadata.email,
+          id: userData.id,
+        };
+
+        setSession(user);
+        setLoading(false);
+      } else {
+        setSession(null);
+        setLoading(false);
+      }
+    };
+
+    initSession();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        if (!isMounted) return;
+        if (session) {
+          const user: User = {
+            firstName: session.user.user_metadata.first_name,
+            lastName: session.user.user_metadata.last_name,
+            email: session.user.user_metadata.email,
+            id: session.user.id,
+          };
+          setSession(user);
+        }else{
+          setSession(null)
+          setLoading(false)
+        }
+      },
+    );
+
+    return () => {
+      isMounted = false;
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
 
   return (
     <AuthContext.Provider
