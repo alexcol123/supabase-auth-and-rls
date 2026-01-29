@@ -6,9 +6,9 @@ const SignIn = () => {
   const navigate = useNavigate();
   const { signIn } = UserAuth();
 
+  const [email, setEmail] = useState("alex@test.com");
+  const [password, setPassword] = useState("123456");
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const handleSignIn = async (e: React.FormEvent) => {
@@ -38,8 +38,6 @@ const SignIn = () => {
         className="max-w-md w-full mx-auto bg-gray-800 p-8 rounded-lg shadow-lg"
       >
         <h2 className="text-3xl font-semibold mb-6">Sign in</h2>
-
-        {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
         <div className="flex flex-col space-y-4">
           <input
