@@ -108,32 +108,36 @@ export const AuthContextProvider = ({
     let isMounted = true;
 
     const initSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+      try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
 
-      if (!isMounted) return;
+        if (!isMounted) return;
 
-      // console.log(session)
+        if (session?.user) {
+          const userData = session.user;
+          const userRole = await fetchUserRole(session.user.id);
 
-      if (session?.user) {
-        const userData = session.user;
+          const user: User = {
+            firstName: userData.user_metadata.first_name,
+            lastName: userData.user_metadata.last_name,
+            email: userData.user_metadata.email,
+            id: userData.id,
+            role: userRole,
+          };
 
-        const userole = await fetchUserRole(session.user.id);
-
-        const user: User = {
-          firstName: userData.user_metadata.first_name,
-          lastName: userData.user_metadata.last_name,
-          email: userData.user_metadata.email,
-          id: userData.id,
-          role: userole,
-        };
-
-        setSession(user);
-        setLoading(false);
-      } else {
+          setSession(user);
+        } else {
+          setSession(null);
+        }
+      } catch (error) {
+        console.error("Error initializing session:", error);
         setSession(null);
-        setLoading(false);
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 

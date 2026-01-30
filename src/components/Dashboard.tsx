@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import PixelCharacter from "./PixelArt";
 
 const Dashboard = () => {
-  const { signOut, session, loading } = UserAuth();
+  // PrivateRoute handles loading/auth - session is guaranteed here
+  const { signOut, session } = UserAuth();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const navigate = useNavigate();
 
@@ -20,28 +21,13 @@ const Dashboard = () => {
     }
   };
 
-  // Determine which character to show based on user's first name
   const getCharacter = () => {
     const name = session?.firstName?.toLowerCase() || "";
     if (name.includes("jim") || name.includes("hopper")) return "hopper";
     if (name.includes("eleven")) return "eleven";
     if (name.includes("max")) return "max";
-    // Default
     return "eleven";
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-gray-400">Loading...</p>
-      </div>
-    );
-  }
-
-  if (!session) {
-    navigate("/sign-in");
-    return null;
-  }
 
   return (
     <section className="max-w-4xl mx-auto px-4 py-12">

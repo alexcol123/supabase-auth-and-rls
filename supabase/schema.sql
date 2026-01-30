@@ -2,8 +2,6 @@
 --  SUPABASE RLS TUTORIAL
 --  Run each section one at a time in SQL Editor
 -- =============================================
-
-
 -- =============================================
 --  STEP 0: Setup Supabase Project
 -- =============================================
@@ -17,14 +15,11 @@
 --     VITE_SUPABASE_ANON_KEY=sb_publishable_uJP8eiqY4.......
 --
 --  5. Create a .env file in the project root (copy from .env.example)
-
-
 -- =============================================
 --  STEP 1: Create profiles table
 -- =============================================
 --  This table stores user profile data linked to auth.users
 --  The foreign key ensures when a user is deleted, their profile is too
-
 CREATE TABLE public.profiles (
   id uuid REFERENCES auth.users ON DELETE CASCADE PRIMARY KEY,
   first_name text,
@@ -32,39 +27,26 @@ CREATE TABLE public.profiles (
   avatar_url text,
   created_at timestamp with time zone DEFAULT now()
 );
-
-
 -- =============================================
 --  STEP 2: Enable Row Level Security
 -- =============================================
 --  RLS is disabled by default. This turns it on.
 --  WARNING: Once enabled, NO ONE can access the table until you add policies!
-
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
-
-
 -- =============================================
 --  STEP 3: Create RLS Policies
 -- =============================================
 --  These policies define WHO can do WHAT with the data
 --  auth.uid() returns the logged-in user's ID from their JWT
-
 -- Users can only read their own profile
-CREATE POLICY "Users can read own profile"
-  ON public.profiles FOR SELECT
-  USING (auth.uid() = id);
-
+CREATE POLICY "Users can read own profile" ON public.profiles FOR
+SELECT USING (auth.uid() = id);
 -- Users can only update their own profile
-CREATE POLICY "Users can update own profile"
-  ON public.profiles FOR UPDATE
-  USING (auth.uid() = id);
-
+CREATE POLICY "Users can update own profile" ON public.profiles FOR
+UPDATE USING (auth.uid() = id);
 -- Users can only insert their own profile (id must match their auth id)
-CREATE POLICY "Users can insert own profile"
-  ON public.profiles FOR INSERT
-  WITH CHECK (auth.uid() = id);
-
-
+CREATE POLICY "Users can insert own profile" ON public.profiles FOR
+INSERT WITH CHECK (auth.uid() = id);
 -- =============================================
 --  FIXING MISTAKES: How to modify tables
 -- =============================================
@@ -84,8 +66,6 @@ CREATE POLICY "Users can insert own profile"
 --
 --  Drop entire table and start over:
 --  DROP TABLE public.profiles;
-
-
 -- =============================================
 --  STEP 4: Create a PostgreSQL Function
 -- =============================================
@@ -98,21 +78,16 @@ CREATE POLICY "Users can insert own profile"
 --    - raw_user_meta_data: JSON object containing data passed during signup
 --    - ->> operator: Extracts a value from JSON as text
 --    - SECURITY DEFINER: Runs with elevated privileges (bypasses RLS)
-
-CREATE OR REPLACE FUNCTION public.handle_new_user()
-RETURNS trigger AS $$
-BEGIN
-  INSERT INTO public.profiles (id, first_name, last_name)
-  VALUES (
+CREATE OR REPLACE FUNCTION public.handle_new_user() RETURNS trigger AS $$ BEGIN
+INSERT INTO public.profiles (id, first_name, last_name)
+VALUES (
     new.id,
     new.raw_user_meta_data->>'first_name',
     new.raw_user_meta_data->>'last_name'
   );
-  RETURN new;
+RETURN new;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
-
-
 -- =============================================
 --  STEP 5: Create a PostgreSQL Trigger
 -- =============================================
@@ -126,12 +101,9 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 --    - EXECUTE FUNCTION: Specifies which function to call
 --
 --  Flow: User signs up -> Row inserted in auth.users -> Trigger fires -> Function executes -> Profile created
-
 CREATE TRIGGER on_auth_user_created
-  AFTER INSERT ON auth.users
-  FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
-
-
+AFTER
+INSERT ON auth.users FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
 -- =============================================
 --  STEP 6: Clear existing users (if any)
 -- =============================================
@@ -142,8 +114,6 @@ CREATE TRIGGER on_auth_user_created
 --    DELETE FROM public.profiles;
 --
 --  Then sign up fresh to test the trigger.
-
-
 -- =============================================
 --  STEP 7: Disable email confirmation (for development)
 -- =============================================
@@ -157,8 +127,6 @@ CREATE TRIGGER on_auth_user_created
 --  5. Click "Save"
 --
 --  NOTE: Enable this again for production!
-
-
 -- =============================================
 --  STEP 8: Test it!
 -- =============================================
@@ -168,8 +136,6 @@ CREATE TRIGGER on_auth_user_created
 --
 --  To verify in SQL Editor:
 --  SELECT * FROM public.profiles;
-
-
 -- =============================================
 --  STEP 9: Verify in Table Editor
 -- =============================================
@@ -184,33 +150,23 @@ CREATE TRIGGER on_auth_user_created
 --    - No frontend code needed - the database handled it
 --
 --  Congratulations! You're writing real SQL.
-
-
 -- =============================================
 --  STEP 10: Add Roles to Profiles Table
 -- =============================================
 --  Now we will add admin and user roles to our profiles table
-
 -- Add role column for admin vs user distinction
 ALTER TABLE public.profiles
-ADD COLUMN role TEXT NOT NULL DEFAULT 'user'
-CHECK (role IN ('user', 'admin'));
-
+ADD COLUMN role TEXT NOT NULL DEFAULT 'user' CHECK (role IN ('user', 'admin'));
 --  1. Go to Supabase Dashboard
 --  2. Click "Database"
 --  3. On the profiles table you should see the role column
-
-
 -- =============================================
 --  STEP 11: Clear Profiles Table
 -- =============================================
-
 -- Delete all users if you had created any 
-  DELETE FROM auth.users; 
-  -- Delete all profiles  if you had created any 
+DELETE FROM auth.users;
+-- Delete all profiles  if you had created any 
 DELETE FROM public.profiles;
-
-
 -- =============================================
 --  STEP 12: Create Test Users
 -- =============================================
@@ -227,7 +183,38 @@ DELETE FROM public.profiles;
 --  | User  | Eleven     | Hopper    | eleven@hawkins.com   | password |
 --  | User  | Max        | Mayfield  | max@hawkins.com      | password |
 --  +-------+------------+-----------+----------------------+----------+
+-- =============================================
+--  STEP 12: Check users 
+-- =============================================
+--  go to table editor
+--   click on profiles to see the data in the table   
+--  you will see the  3 users
+--NOTICE they are all users not Admin
+--    -
 
+
+
+-- =============================================
+--  STEP 13: Promote Hopper to Admin
+-- =============================================
+--  Right now all 3 users have role = 'user'
+--  We need to make Jim Hopper an admin
+--
+--  Run this query in SQL Editor:
+UPDATE public.profiles
+SET role = 'admin'
+WHERE first_name = 'jim';
+--
+--  NOTE: In production you'd use the user's ID instead of name,
+--  but for this tutorial we use first_name since your IDs will differ.
+--
+--  Verify it worked:
+--    1. Go to Table Editor > profiles
+--    2. Hopper's role should now show 'admin'
+--
+--  Troubleshooting:
+--    - Names are case-sensitive ('jim' != 'Jim')
+--    - Check your profiles table for the exact first_name value
 
 -- =============================================
 --  SUMMARY: What You Learned
@@ -242,10 +229,9 @@ DELETE FROM public.profiles;
 --
 --  These are core PostgreSQL concepts used in production applications.
 -- =============================================
-
-
--- TODO 
---  add user role to app
--- add user role to hoper/ admin 
--- protect dashboard / protected route
--- edit styles to match the landig a bit
+--  DONE! You've completed the RLS tutorial.
+-- =============================================
+--  Next steps to explore:
+--    - Add admin-only policies (admins can see all profiles)
+--    - Create a posts table with RLS
+--    - Add a likes table with user-specific policies
