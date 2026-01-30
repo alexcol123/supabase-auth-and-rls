@@ -277,29 +277,38 @@ const App = () => {
           <p className="text-sm text-gray-500 mb-6">Your test subjects</p>
           <div className="flex justify-center gap-12">
             {/* Hopper */}
-            <div className="flex flex-col items-center">
-              <div className="mb-3 relative" style={{ width: 40, height: 80 }}>
+            <div className="flex flex-col items-center group cursor-pointer">
+              <div
+                className="mb-3 relative transition-transform duration-200 group-hover:-translate-y-2 group-hover:scale-110"
+                style={{ width: 40, height: 80 }}
+              >
                 <div style={pixelArt.hopper} />
               </div>
-              <p className="text-red-500 font-semibold text-sm">Hopper</p>
+              <p className="text-red-500 font-semibold text-sm group-hover:text-red-400 transition-colors">Hopper</p>
               <p className="text-xs text-gray-600">Admin</p>
             </div>
 
             {/* Eleven */}
-            <div className="flex flex-col items-center">
-              <div className="mb-3 relative" style={{ width: 40, height: 80 }}>
+            <div className="flex flex-col items-center group cursor-pointer">
+              <div
+                className="mb-3 relative transition-transform duration-200 group-hover:-translate-y-2 group-hover:scale-110"
+                style={{ width: 40, height: 80 }}
+              >
                 <div style={pixelArt.eleven} />
               </div>
-              <p className="text-white font-semibold text-sm">Eleven</p>
+              <p className="text-white font-semibold text-sm group-hover:text-blue-400 transition-colors">Eleven</p>
               <p className="text-xs text-gray-600">User</p>
             </div>
 
             {/* Max */}
-            <div className="flex flex-col items-center">
-              <div className="mb-3 relative" style={{ width: 40, height: 80 }}>
+            <div className="flex flex-col items-center group cursor-pointer">
+              <div
+                className="mb-3 relative transition-transform duration-200 group-hover:-translate-y-2 group-hover:scale-110"
+                style={{ width: 40, height: 80 }}
+              >
                 <div style={pixelArt.max} />
               </div>
-              <p className="text-white font-semibold text-sm">Max</p>
+              <p className="text-white font-semibold text-sm group-hover:text-orange-400 transition-colors">Max</p>
               <p className="text-xs text-gray-600">User</p>
             </div>
           </div>
