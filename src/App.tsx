@@ -17,12 +17,12 @@ const colors = {
   elevenSkin: "#DEBB9B",
   elevenDress: "#bc8996",
   elevenCollar: "#FFFFFF",
-  // Max
-  maxHair: "#D84315",
-  maxSkin: "#E8C4A8",
-  freckle: "#C9A066",
-  maxHoodie: "#1565C0",
-  maxShirt: "#FFFFFF",
+  // Max (Season 4 look)
+  maxHair: "#C2623D",
+  maxSkin: "#F0D0B8",
+  freckle: "#D4A574",
+  maxHoodie: "#5DADE2",
+  maxShirt: "#F4D03F",
   // Shared
   eye: "#1a1a1a",
   mouth: "#C97878",
