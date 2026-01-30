@@ -12,11 +12,12 @@ const colors = {
   hopperShirt: "#C9B896",
   hopperBadge: "#DAA520",
   hopperPants: "#3B3530",
-  // Eleven
-  elevenHair: "#4A3728",
-  elevenSkin: "#DEBB9B",
-  elevenDress: "#bc8996",
-  elevenCollar: "#FFFFFF",
+  // Eleven (Season 1 - pink dress, blue jacket)
+  elevenHair: "#3D2B1F",
+  elevenSkin: "#F5E0D0",
+  elevenDress: "#D4A59A",
+  elevenCollar: "#F5F5F5",
+  elevenJacket: "#4A6FA5",
   // Max (Season 4 look)
   maxHair: "#C2623D",
   maxSkin: "#F0D0B8",
@@ -135,25 +136,26 @@ const pixelArt = {
       /* Row 8 - Neck/Collar */
       ${2*px}px ${8*px}px ${colors.elevenCollar}, ${3*px}px ${8*px}px ${colors.elevenSkin},
       ${4*px}px ${8*px}px ${colors.elevenSkin}, ${5*px}px ${8*px}px ${colors.elevenCollar},
-      /* Row 9 - Dress top */
-      ${px}px ${9*px}px ${colors.elevenCollar}, ${2*px}px ${9*px}px ${colors.elevenDress}, ${3*px}px ${9*px}px ${colors.elevenDress},
-      ${4*px}px ${9*px}px ${colors.elevenDress}, ${5*px}px ${9*px}px ${colors.elevenDress}, ${6*px}px ${9*px}px ${colors.elevenCollar},
-      /* Row 10 - Dress with arms */
-      0 ${10*px}px ${colors.elevenSkin}, ${px}px ${10*px}px ${colors.elevenDress}, ${2*px}px ${10*px}px ${colors.elevenDress},
+      /* Row 9 - Jacket top with dress showing */
+      0 ${9*px}px ${colors.elevenJacket}, ${px}px ${9*px}px ${colors.elevenJacket}, ${2*px}px ${9*px}px ${colors.elevenDress},
+      ${3*px}px ${9*px}px ${colors.elevenDress}, ${4*px}px ${9*px}px ${colors.elevenDress}, ${5*px}px ${9*px}px ${colors.elevenDress},
+      ${6*px}px ${9*px}px ${colors.elevenJacket}, ${7*px}px ${9*px}px ${colors.elevenJacket},
+      /* Row 10 - Jacket with arms */
+      0 ${10*px}px ${colors.elevenJacket}, ${px}px ${10*px}px ${colors.elevenJacket}, ${2*px}px ${10*px}px ${colors.elevenDress},
       ${3*px}px ${10*px}px ${colors.elevenDress}, ${4*px}px ${10*px}px ${colors.elevenDress}, ${5*px}px ${10*px}px ${colors.elevenDress},
-      ${6*px}px ${10*px}px ${colors.elevenDress}, ${7*px}px ${10*px}px ${colors.elevenSkin},
-      /* Row 11 - Dress */
-      0 ${11*px}px ${colors.elevenSkin}, ${px}px ${11*px}px ${colors.elevenDress}, ${2*px}px ${11*px}px ${colors.elevenDress},
+      ${6*px}px ${10*px}px ${colors.elevenJacket}, ${7*px}px ${10*px}px ${colors.elevenJacket},
+      /* Row 11 - Jacket */
+      0 ${11*px}px ${colors.elevenJacket}, ${px}px ${11*px}px ${colors.elevenJacket}, ${2*px}px ${11*px}px ${colors.elevenDress},
       ${3*px}px ${11*px}px ${colors.elevenDress}, ${4*px}px ${11*px}px ${colors.elevenDress}, ${5*px}px ${11*px}px ${colors.elevenDress},
-      ${6*px}px ${11*px}px ${colors.elevenDress}, ${7*px}px ${11*px}px ${colors.elevenSkin},
-      /* Row 12 - Dress flare */
-      0 ${12*px}px ${colors.elevenDress}, ${px}px ${12*px}px ${colors.elevenDress}, ${2*px}px ${12*px}px ${colors.elevenDress},
+      ${6*px}px ${11*px}px ${colors.elevenJacket}, ${7*px}px ${11*px}px ${colors.elevenJacket},
+      /* Row 12 - Dress showing below jacket */
+      0 ${12*px}px ${colors.elevenJacket}, ${px}px ${12*px}px ${colors.elevenDress}, ${2*px}px ${12*px}px ${colors.elevenDress},
       ${3*px}px ${12*px}px ${colors.elevenDress}, ${4*px}px ${12*px}px ${colors.elevenDress}, ${5*px}px ${12*px}px ${colors.elevenDress},
-      ${6*px}px ${12*px}px ${colors.elevenDress}, ${7*px}px ${12*px}px ${colors.elevenDress},
+      ${6*px}px ${12*px}px ${colors.elevenDress}, ${7*px}px ${12*px}px ${colors.elevenJacket},
       /* Row 13 - Dress bottom */
-      0 ${13*px}px ${colors.elevenDress}, ${px}px ${13*px}px ${colors.elevenDress}, ${2*px}px ${13*px}px ${colors.elevenDress},
-      ${3*px}px ${13*px}px ${colors.elevenDress}, ${4*px}px ${13*px}px ${colors.elevenDress}, ${5*px}px ${13*px}px ${colors.elevenDress},
-      ${6*px}px ${13*px}px ${colors.elevenDress}, ${7*px}px ${13*px}px ${colors.elevenDress},
+      ${px}px ${13*px}px ${colors.elevenDress}, ${2*px}px ${13*px}px ${colors.elevenDress},
+      ${3*px}px ${13*px}px ${colors.elevenDress}, ${4*px}px ${13*px}px ${colors.elevenDress},
+      ${5*px}px ${13*px}px ${colors.elevenDress}, ${6*px}px ${13*px}px ${colors.elevenDress},
       /* Row 14 - Legs */
       ${2*px}px ${14*px}px ${colors.elevenSkin}, ${3*px}px ${14*px}px ${colors.elevenSkin},
       ${4*px}px ${14*px}px ${colors.elevenSkin}, ${5*px}px ${14*px}px ${colors.elevenSkin},
