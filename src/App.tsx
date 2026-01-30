@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
-// Pixel size for the 8-bit art
-const px = 4;
+// Pixel size for the 8-bit art (5px = ~30% bigger)
+const px = 5;
 
 // Color palette
 const colors = {
@@ -15,7 +15,7 @@ const colors = {
   // Eleven
   elevenHair: "#4A3728",
   elevenSkin: "#DEBB9B",
-  elevenDress: "#E91E63",
+  elevenDress: "#bc8996",
   elevenCollar: "#FFFFFF",
   // Max
   maxHair: "#D84315",
@@ -276,7 +276,7 @@ const App = () => {
           <div className="flex justify-center gap-12">
             {/* Hopper */}
             <div className="flex flex-col items-center">
-              <div className="mb-3 relative" style={{ width: 32, height: 64 }}>
+              <div className="mb-3 relative" style={{ width: 40, height: 80 }}>
                 <div style={pixelArt.hopper} />
               </div>
               <p className="text-red-500 font-semibold text-sm">Hopper</p>
@@ -285,7 +285,7 @@ const App = () => {
 
             {/* Eleven */}
             <div className="flex flex-col items-center">
-              <div className="mb-3 relative" style={{ width: 32, height: 64 }}>
+              <div className="mb-3 relative" style={{ width: 40, height: 80 }}>
                 <div style={pixelArt.eleven} />
               </div>
               <p className="text-white font-semibold text-sm">Eleven</p>
@@ -294,7 +294,7 @@ const App = () => {
 
             {/* Max */}
             <div className="flex flex-col items-center">
-              <div className="mb-3 relative" style={{ width: 32, height: 64 }}>
+              <div className="mb-3 relative" style={{ width: 40, height: 80 }}>
                 <div style={pixelArt.max} />
               </div>
               <p className="text-white font-semibold text-sm">Max</p>
