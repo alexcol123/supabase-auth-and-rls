@@ -269,6 +269,39 @@ const App = () => {
             Sign In
           </Link>
         </div>
+
+        {/* Test Users with Pixel Art */}
+        <div className="mt-16">
+          <p className="text-sm text-gray-500 mb-6">Your test subjects</p>
+          <div className="flex justify-center gap-12">
+            {/* Hopper */}
+            <div className="flex flex-col items-center">
+              <div className="mb-3 relative" style={{ width: 32, height: 64 }}>
+                <div style={pixelArt.hopper} />
+              </div>
+              <p className="text-red-500 font-semibold text-sm">Hopper</p>
+              <p className="text-xs text-gray-600">Admin</p>
+            </div>
+
+            {/* Eleven */}
+            <div className="flex flex-col items-center">
+              <div className="mb-3 relative" style={{ width: 32, height: 64 }}>
+                <div style={pixelArt.eleven} />
+              </div>
+              <p className="text-white font-semibold text-sm">Eleven</p>
+              <p className="text-xs text-gray-600">User</p>
+            </div>
+
+            {/* Max */}
+            <div className="flex flex-col items-center">
+              <div className="mb-3 relative" style={{ width: 32, height: 64 }}>
+                <div style={pixelArt.max} />
+              </div>
+              <p className="text-white font-semibold text-sm">Max</p>
+              <p className="text-xs text-gray-600">User</p>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* What You'll Learn */}
@@ -304,41 +337,6 @@ const App = () => {
             <p className="text-gray-400 text-sm">
               Give admins superpowers with EXISTS subqueries
             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Test Users with Pixel Art */}
-      <section className="max-w-2xl mx-auto px-4 py-16 text-center">
-        <h2 className="text-2xl font-bold mb-10 text-gray-300">
-          Your Test Subjects
-        </h2>
-        <div className="flex justify-center gap-16">
-          {/* Hopper */}
-          <div className="flex flex-col items-center">
-            <div className="mb-4 relative" style={{ width: 32, height: 64 }}>
-              <div style={pixelArt.hopper} />
-            </div>
-            <p className="text-red-500 font-semibold">Hopper</p>
-            <p className="text-xs text-gray-500">Admin</p>
-          </div>
-
-          {/* Eleven */}
-          <div className="flex flex-col items-center">
-            <div className="mb-4 relative" style={{ width: 32, height: 64 }}>
-              <div style={pixelArt.eleven} />
-            </div>
-            <p className="text-white font-semibold">Eleven</p>
-            <p className="text-xs text-gray-500">User</p>
-          </div>
-
-          {/* Max */}
-          <div className="flex flex-col items-center">
-            <div className="mb-4 relative" style={{ width: 32, height: 64 }}>
-              <div style={pixelArt.max} />
-            </div>
-            <p className="text-white font-semibold">Max</p>
-            <p className="text-xs text-gray-500">User</p>
           </div>
         </div>
       </section>
