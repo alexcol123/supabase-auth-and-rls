@@ -205,12 +205,10 @@ CHECK (role IN ('user', 'admin'));
 --  STEP 11: Clear Profiles Table
 -- =============================================
 
--- Delete all users from profile table
+-- Delete all users if you had created any 
+  DELETE FROM auth.users; 
+  -- Delete all profiles  if you had created any 
 DELETE FROM public.profiles;
-
---  1. Go to Supabase Dashboard
---  2. Click "Database"
---  3. Click on square icon next to profiles table, it will show empty table
 
 
 -- =============================================
@@ -244,3 +242,10 @@ DELETE FROM public.profiles;
 --
 --  These are core PostgreSQL concepts used in production applications.
 -- =============================================
+
+
+-- TODO 
+--  add user role to app
+-- add user role to hoper/ admin 
+-- protect dashboard / protected route
+-- edit styles to match the landig a bit
