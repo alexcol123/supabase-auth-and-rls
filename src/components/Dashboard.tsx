@@ -9,6 +9,20 @@ const Dashboard = () => {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const navigate = useNavigate();
 
+
+
+  // Create Post Form State
+  const [newTitle, setNewTitle] = useState("");
+  const [newContent, setNewContent] = useState("");
+  const [isPublic, setIsPublic] = useState(true);
+  const [isCreating, setIsCreating] = useState(false);
+
+
+  // 
+  const handleCreatePost =()=>{
+    console.log('posted')
+  }
+
   const handleSignOut = async () => {
     setIsLoggingOut(true);
     try {
@@ -31,6 +45,9 @@ const Dashboard = () => {
 
   // Guard for TypeScript (PrivateRoute guarantees session exists)
   if (!session) return null;
+
+
+
 
   return (
     <section className="max-w-4xl mx-auto px-4 py-12">
@@ -76,20 +93,51 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Quick Info */}
-      <div className="mt-12 grid grid-cols-3 gap-4 max-w-md mx-auto">
-        <div className="bg-gray-800 rounded-lg p-4 text-center border border-gray-700">
-          <p className="text-2xl font-bold text-red-500">0</p>
-          <p className="text-xs text-gray-500">Posts</p>
-        </div>
-        <div className="bg-gray-800 rounded-lg p-4 text-center border border-gray-700">
-          <p className="text-2xl font-bold text-red-500">0</p>
-          <p className="text-xs text-gray-500">Likes</p>
-        </div>
-        <div className="bg-gray-800 rounded-lg p-4 text-center border border-gray-700">
-          <p className="text-2xl font-bold text-red-500">1</p>
-          <p className="text-xs text-gray-500">Friends</p>
-        </div>
+
+      {/* Create Post Form */}
+      <div className="mt-8">
+        <h2 className="text-xl font-bold mb-4">Create New Post</h2>
+        <form onSubmit={handleCreatePost} className="bg-gray-800 p-4 rounded-lg space-y-4">
+          <div>
+            <input
+              type="text"
+              placeholder="Post title"
+              value={newTitle}
+              onChange={(e) => setNewTitle(e.target.value)}
+              className="w-full bg-gray-700 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <div>
+            <textarea
+              placeholder="Post content (optional)"
+              value={newContent}
+              onChange={(e) => setNewContent(e.target.value)}
+              className="w-full bg-gray-700 p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[100px]"
+            />
+          </div>
+          <div className="flex items-center gap-4">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={isPublic}
+                onChange={(e) => setIsPublic(e.target.checked)}
+                className="w-5 h-5 rounded"
+              />
+              <span>Public post</span>
+            </label>
+            <span className="text-gray-400 text-sm">
+              {isPublic ? "(Everyone can see)" : "(Only you and admins can see)"}
+            </span>
+          </div>
+          <button
+            type="submit"
+            disabled={isCreating || !newTitle.trim()}
+            className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-4 py-2 rounded-md"
+          >
+            {isCreating ? "Creating..." : "Create Post"}
+          </button>
+        </form>
       </div>
     </section>
   );

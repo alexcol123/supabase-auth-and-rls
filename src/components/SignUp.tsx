@@ -106,6 +106,37 @@ const SignUp = () => {
           </div>
         </div>
       </form>
+
+      {/* Test Users */}
+      <div className="mt-8 max-w-md w-full">
+        <h3 className="text-gray-400 text-sm text-center mb-4">Test Users (click to fill)</h3>
+        <div className="space-y-3">
+          {[
+            { role: "Admin", firstName: "Jim", lastName: "Hopper", email: "jim@hawkins.com", password: "password" },
+            { role: "User", firstName: "Eleven", lastName: "Hopper", email: "eleven@hawkins.com", password: "password" },
+            { role: "User", firstName: "Max", lastName: "Mayfield", email: "max@hawkins.com", password: "password" },
+          ].map((user) => (
+            <div
+              key={user.email}
+              className="bg-gray-800/50 p-3 rounded-lg border border-gray-700 text-sm cursor-pointer hover:border-gray-600 transition-colors"
+              onClick={() => {
+                setFirstName(user.firstName);
+                setLastName(user.lastName);
+                setEmail(user.email);
+                setPassword(user.password);
+              }}
+            >
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-white font-medium">{user.firstName} {user.lastName}</span>
+                <span className={`text-xs px-2 py-0.5 rounded ${user.role === "Admin" ? "bg-red-600/20 text-red-400" : "bg-gray-600/20 text-gray-400"}`}>
+                  {user.role}
+                </span>
+              </div>
+              <p className="text-gray-500">{user.email}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

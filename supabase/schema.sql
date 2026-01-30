@@ -171,8 +171,8 @@ DELETE FROM public.profiles;
 --  STEP 12: Create Test Users
 -- =============================================
 --  Create 3 users to test RLS:
---    - 2 will be users
---    - 1 will be admin
+--    - 2 will be regular users
+--    - 1 will be promoted to admin
 --
 --  Sign up these users through the app:
 --
@@ -183,19 +183,19 @@ DELETE FROM public.profiles;
 --  | User  | Eleven     | Hopper    | eleven@hawkins.com   | password |
 --  | User  | Max        | Mayfield  | max@hawkins.com      | password |
 --  +-------+------------+-----------+----------------------+----------+
--- =============================================
---  STEP 12: Check users 
--- =============================================
---  go to table editor
---   click on profiles to see the data in the table   
---  you will see the  3 users
---NOTICE they are all users not Admin
---    -
-
-
 
 -- =============================================
---  STEP 13: Promote Hopper to Admin
+--  STEP 13: Check Users in Table Editor
+-- =============================================
+--  1. Go to Supabase Dashboard
+--  2. Click "Table Editor" in the sidebar
+--  3. Select the "profiles" table
+--  4. You should see all 3 users
+--
+--  NOTICE: All users have role = 'user' (not admin yet!)
+
+-- =============================================
+--  STEP 14: Promote Hopper to Admin
 -- =============================================
 --  Right now all 3 users have role = 'user'
 --  We need to make Jim Hopper an admin
@@ -203,7 +203,7 @@ DELETE FROM public.profiles;
 --  Run this query in SQL Editor:
 UPDATE public.profiles
 SET role = 'admin'
-WHERE first_name = 'jim';
+WHERE first_name = 'Jim';
 --
 --  NOTE: In production you'd use the user's ID instead of name,
 --  but for this tutorial we use first_name since your IDs will differ.
@@ -213,25 +213,44 @@ WHERE first_name = 'jim';
 --    2. Hopper's role should now show 'admin'
 --
 --  Troubleshooting:
---    - Names are case-sensitive ('jim' != 'Jim')
+--    - Names are case-sensitive ('Jim' != 'jim')
 --    - Check your profiles table for the exact first_name value
 
 -- =============================================
---  SUMMARY: What You Learned
+--  STEP 15: Protect Role from User Changes
 -- =============================================
---  1. CREATE TABLE    - Define database structure
---  2. FOREIGN KEY     - Create relationships between tables
---  3. RLS             - Row Level Security for data protection
---  4. POLICIES        - Define access rules (SELECT, INSERT, UPDATE, DELETE)
---  5. FUNCTIONS       - Reusable SQL code blocks
---  6. TRIGGERS        - Automatic responses to database events
---  7. auth.uid()      - Supabase helper to get current user's ID from JWT
+--  Problem: Users could potentially change their own role to 'admin'!
+--  Solution: Create a trigger that prevents role changes
 --
---  These are core PostgreSQL concepts used in production applications.
+--  This function silently reverts any role changes:
+CREATE OR REPLACE FUNCTION handle_role_protection()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NEW.role IS DISTINCT FROM OLD.role THEN
+    -- Revert the role change silently
+    NEW.role := OLD.role;
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+--  Now try to change Max to admin (this should fail silently):
+--  UPDATE public.profiles
+--  SET role = 'admin'
+--  WHERE first_name = 'Max';
+--
+--  Check the profiles table - Max should still be 'user'!
+
 -- =============================================
---  DONE! You've completed the RLS tutorial.
+--  STEP 16
 -- =============================================
---  Next steps to explore:
---    - Add admin-only policies (admins can see all profiles)
---    - Create a posts table with RLS
---    - Add a likes table with user-specific policies
+-- now  we need to add all the fuctionalityto  to create Posts 
+-- first we should be able to add em. 
+--- them see em all  by everyione
+-- then see only public
+-- admin sees all  
+---
+-- then delete  all  own posts 
+
+-- then admin an delete  all posts and edit
+
