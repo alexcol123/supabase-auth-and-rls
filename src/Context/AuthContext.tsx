@@ -152,6 +152,7 @@ export const AuthContextProvider = ({
             role: userRole,
           };
           setSession(user);
+          setLoading(false);
         } else {
           setSession(null);
           setLoading(false);

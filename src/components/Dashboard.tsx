@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import PixelCharacter from "./PixelArt";
 
 const Dashboard = () => {
-  const { signOut, session } = UserAuth();
+  const { signOut, session, loading } = UserAuth();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const navigate = useNavigate();
 
@@ -30,12 +30,17 @@ const Dashboard = () => {
     return "eleven";
   };
 
-  if (!session) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <p className="text-gray-400">Loading...</p>
       </div>
     );
+  }
+
+  if (!session) {
+    navigate("/sign-in");
+    return null;
   }
 
   return (
@@ -65,7 +70,7 @@ const Dashboard = () => {
           {/* Role Badge - you can add role to your AuthContext later */}
           <div className="pt-2">
             <span className="inline-block bg-red-600/20 text-red-400 text-xs px-3 py-1 rounded-full border border-red-600/30">
-              User
+             {session.role}
             </span>
           </div>
         </div>
