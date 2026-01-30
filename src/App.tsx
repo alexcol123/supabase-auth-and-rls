@@ -5,13 +5,13 @@ const px = 5;
 
 // Color palette
 const colors = {
-  // Hopper
-  hopperHair: "#5D4037",
-  hopperSkin: "#D2A679",
-  mustache: "#3E2723",
-  hopperShirt: "#D4A574",
-  hopperBadge: "#FFD700",
-  hopperPants: "#3E2723",
+  // Hopper (Hawkins Police Chief)
+  hopperHair: "#3B2417",
+  hopperSkin: "#E5C4A8",
+  mustache: "#3B2417",
+  hopperShirt: "#C9B896",
+  hopperBadge: "#DAA520",
+  hopperPants: "#3B3530",
   // Eleven
   elevenHair: "#4A3728",
   elevenSkin: "#DEBB9B",
