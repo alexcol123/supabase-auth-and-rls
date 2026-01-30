@@ -9,19 +9,27 @@ const colors = {
   hopperHair: "#5D4037",
   hopperSkin: "#D2A679",
   mustache: "#3E2723",
+  hopperShirt: "#D4A574",
+  hopperBadge: "#FFD700",
+  hopperPants: "#3E2723",
   // Eleven
   elevenHair: "#4A3728",
   elevenSkin: "#DEBB9B",
+  elevenDress: "#E91E63",
+  elevenCollar: "#FFFFFF",
   // Max
   maxHair: "#D84315",
   maxSkin: "#E8C4A8",
   freckle: "#C9A066",
+  maxHoodie: "#1565C0",
+  maxShirt: "#FFFFFF",
   // Shared
   eye: "#1a1a1a",
   mouth: "#C97878",
 };
 
 // Pixel art using box-shadow (each shadow = 1 pixel)
+// Now 8x16 sprites with bodies!
 const pixelArt = {
   hopper: {
     width: px,
@@ -57,7 +65,36 @@ const pixelArt = {
       ${6*px}px ${6*px}px ${colors.hopperSkin}, ${7*px}px ${6*px}px ${colors.hopperSkin},
       /* Row 7 - Chin */
       ${px}px ${7*px}px ${colors.hopperSkin}, ${2*px}px ${7*px}px ${colors.hopperSkin}, ${3*px}px ${7*px}px ${colors.hopperSkin},
-      ${4*px}px ${7*px}px ${colors.hopperSkin}, ${5*px}px ${7*px}px ${colors.hopperSkin}, ${6*px}px ${7*px}px ${colors.hopperSkin}
+      ${4*px}px ${7*px}px ${colors.hopperSkin}, ${5*px}px ${7*px}px ${colors.hopperSkin}, ${6*px}px ${7*px}px ${colors.hopperSkin},
+      /* Row 8 - Neck/Collar */
+      ${2*px}px ${8*px}px ${colors.hopperSkin}, ${3*px}px ${8*px}px ${colors.hopperSkin},
+      ${4*px}px ${8*px}px ${colors.hopperSkin}, ${5*px}px ${8*px}px ${colors.hopperSkin},
+      /* Row 9 - Shoulders */
+      0 ${9*px}px ${colors.hopperShirt}, ${px}px ${9*px}px ${colors.hopperShirt}, ${2*px}px ${9*px}px ${colors.hopperShirt},
+      ${3*px}px ${9*px}px ${colors.hopperShirt}, ${4*px}px ${9*px}px ${colors.hopperShirt}, ${5*px}px ${9*px}px ${colors.hopperShirt},
+      ${6*px}px ${9*px}px ${colors.hopperShirt}, ${7*px}px ${9*px}px ${colors.hopperShirt},
+      /* Row 10 - Shirt with badge */
+      0 ${10*px}px ${colors.hopperShirt}, ${px}px ${10*px}px ${colors.hopperBadge}, ${2*px}px ${10*px}px ${colors.hopperShirt},
+      ${3*px}px ${10*px}px ${colors.hopperShirt}, ${4*px}px ${10*px}px ${colors.hopperShirt}, ${5*px}px ${10*px}px ${colors.hopperShirt},
+      ${6*px}px ${10*px}px ${colors.hopperShirt}, ${7*px}px ${10*px}px ${colors.hopperShirt},
+      /* Row 11 - Shirt */
+      0 ${11*px}px ${colors.hopperShirt}, ${px}px ${11*px}px ${colors.hopperShirt}, ${2*px}px ${11*px}px ${colors.hopperShirt},
+      ${3*px}px ${11*px}px ${colors.hopperShirt}, ${4*px}px ${11*px}px ${colors.hopperShirt}, ${5*px}px ${11*px}px ${colors.hopperShirt},
+      ${6*px}px ${11*px}px ${colors.hopperShirt}, ${7*px}px ${11*px}px ${colors.hopperShirt},
+      /* Row 12 - Belt area */
+      0 ${12*px}px ${colors.hopperPants}, ${px}px ${12*px}px ${colors.hopperPants}, ${2*px}px ${12*px}px ${colors.hopperPants},
+      ${3*px}px ${12*px}px ${colors.hopperBadge}, ${4*px}px ${12*px}px ${colors.hopperBadge}, ${5*px}px ${12*px}px ${colors.hopperPants},
+      ${6*px}px ${12*px}px ${colors.hopperPants}, ${7*px}px ${12*px}px ${colors.hopperPants},
+      /* Row 13 - Pants */
+      0 ${13*px}px ${colors.hopperPants}, ${px}px ${13*px}px ${colors.hopperPants}, ${2*px}px ${13*px}px ${colors.hopperPants},
+      ${3*px}px ${13*px}px ${colors.hopperPants}, ${4*px}px ${13*px}px ${colors.hopperPants}, ${5*px}px ${13*px}px ${colors.hopperPants},
+      ${6*px}px ${13*px}px ${colors.hopperPants}, ${7*px}px ${13*px}px ${colors.hopperPants},
+      /* Row 14 - Legs */
+      ${px}px ${14*px}px ${colors.hopperPants}, ${2*px}px ${14*px}px ${colors.hopperPants}, ${3*px}px ${14*px}px ${colors.hopperPants},
+      ${4*px}px ${14*px}px ${colors.hopperPants}, ${5*px}px ${14*px}px ${colors.hopperPants}, ${6*px}px ${14*px}px ${colors.hopperPants},
+      /* Row 15 - Feet */
+      ${px}px ${15*px}px ${colors.hopperPants}, ${2*px}px ${15*px}px ${colors.hopperPants},
+      ${5*px}px ${15*px}px ${colors.hopperPants}, ${6*px}px ${15*px}px ${colors.hopperPants}
     `,
   },
   eleven: {
@@ -94,7 +131,35 @@ const pixelArt = {
       ${6*px}px ${6*px}px ${colors.elevenSkin}, ${7*px}px ${6*px}px ${colors.elevenSkin},
       /* Row 7 - Chin */
       ${px}px ${7*px}px ${colors.elevenSkin}, ${2*px}px ${7*px}px ${colors.elevenSkin}, ${3*px}px ${7*px}px ${colors.elevenSkin},
-      ${4*px}px ${7*px}px ${colors.elevenSkin}, ${5*px}px ${7*px}px ${colors.elevenSkin}, ${6*px}px ${7*px}px ${colors.elevenSkin}
+      ${4*px}px ${7*px}px ${colors.elevenSkin}, ${5*px}px ${7*px}px ${colors.elevenSkin}, ${6*px}px ${7*px}px ${colors.elevenSkin},
+      /* Row 8 - Neck/Collar */
+      ${2*px}px ${8*px}px ${colors.elevenCollar}, ${3*px}px ${8*px}px ${colors.elevenSkin},
+      ${4*px}px ${8*px}px ${colors.elevenSkin}, ${5*px}px ${8*px}px ${colors.elevenCollar},
+      /* Row 9 - Dress top */
+      ${px}px ${9*px}px ${colors.elevenCollar}, ${2*px}px ${9*px}px ${colors.elevenDress}, ${3*px}px ${9*px}px ${colors.elevenDress},
+      ${4*px}px ${9*px}px ${colors.elevenDress}, ${5*px}px ${9*px}px ${colors.elevenDress}, ${6*px}px ${9*px}px ${colors.elevenCollar},
+      /* Row 10 - Dress with arms */
+      0 ${10*px}px ${colors.elevenSkin}, ${px}px ${10*px}px ${colors.elevenDress}, ${2*px}px ${10*px}px ${colors.elevenDress},
+      ${3*px}px ${10*px}px ${colors.elevenDress}, ${4*px}px ${10*px}px ${colors.elevenDress}, ${5*px}px ${10*px}px ${colors.elevenDress},
+      ${6*px}px ${10*px}px ${colors.elevenDress}, ${7*px}px ${10*px}px ${colors.elevenSkin},
+      /* Row 11 - Dress */
+      0 ${11*px}px ${colors.elevenSkin}, ${px}px ${11*px}px ${colors.elevenDress}, ${2*px}px ${11*px}px ${colors.elevenDress},
+      ${3*px}px ${11*px}px ${colors.elevenDress}, ${4*px}px ${11*px}px ${colors.elevenDress}, ${5*px}px ${11*px}px ${colors.elevenDress},
+      ${6*px}px ${11*px}px ${colors.elevenDress}, ${7*px}px ${11*px}px ${colors.elevenSkin},
+      /* Row 12 - Dress flare */
+      0 ${12*px}px ${colors.elevenDress}, ${px}px ${12*px}px ${colors.elevenDress}, ${2*px}px ${12*px}px ${colors.elevenDress},
+      ${3*px}px ${12*px}px ${colors.elevenDress}, ${4*px}px ${12*px}px ${colors.elevenDress}, ${5*px}px ${12*px}px ${colors.elevenDress},
+      ${6*px}px ${12*px}px ${colors.elevenDress}, ${7*px}px ${12*px}px ${colors.elevenDress},
+      /* Row 13 - Dress bottom */
+      0 ${13*px}px ${colors.elevenDress}, ${px}px ${13*px}px ${colors.elevenDress}, ${2*px}px ${13*px}px ${colors.elevenDress},
+      ${3*px}px ${13*px}px ${colors.elevenDress}, ${4*px}px ${13*px}px ${colors.elevenDress}, ${5*px}px ${13*px}px ${colors.elevenDress},
+      ${6*px}px ${13*px}px ${colors.elevenDress}, ${7*px}px ${13*px}px ${colors.elevenDress},
+      /* Row 14 - Legs */
+      ${2*px}px ${14*px}px ${colors.elevenSkin}, ${3*px}px ${14*px}px ${colors.elevenSkin},
+      ${4*px}px ${14*px}px ${colors.elevenSkin}, ${5*px}px ${14*px}px ${colors.elevenSkin},
+      /* Row 15 - Feet */
+      ${px}px ${15*px}px ${colors.elevenHair}, ${2*px}px ${15*px}px ${colors.elevenHair},
+      ${5*px}px ${15*px}px ${colors.elevenHair}, ${6*px}px ${15*px}px ${colors.elevenHair}
     `,
   },
   max: {
@@ -131,7 +196,36 @@ const pixelArt = {
       /* Row 7 - Chin with hair */
       0 ${7*px}px ${colors.maxHair}, ${px}px ${7*px}px ${colors.maxSkin}, ${2*px}px ${7*px}px ${colors.maxSkin},
       ${3*px}px ${7*px}px ${colors.maxSkin}, ${4*px}px ${7*px}px ${colors.maxSkin}, ${5*px}px ${7*px}px ${colors.maxSkin},
-      ${6*px}px ${7*px}px ${colors.maxSkin}, ${7*px}px ${7*px}px ${colors.maxHair}
+      ${6*px}px ${7*px}px ${colors.maxSkin}, ${7*px}px ${7*px}px ${colors.maxHair},
+      /* Row 8 - Neck/Hair flowing */
+      0 ${8*px}px ${colors.maxHair}, ${2*px}px ${8*px}px ${colors.maxSkin}, ${3*px}px ${8*px}px ${colors.maxSkin},
+      ${4*px}px ${8*px}px ${colors.maxSkin}, ${5*px}px ${8*px}px ${colors.maxSkin}, ${7*px}px ${8*px}px ${colors.maxHair},
+      /* Row 9 - Hoodie top */
+      0 ${9*px}px ${colors.maxHair}, ${px}px ${9*px}px ${colors.maxHoodie}, ${2*px}px ${9*px}px ${colors.maxHoodie},
+      ${3*px}px ${9*px}px ${colors.maxShirt}, ${4*px}px ${9*px}px ${colors.maxShirt}, ${5*px}px ${9*px}px ${colors.maxHoodie},
+      ${6*px}px ${9*px}px ${colors.maxHoodie}, ${7*px}px ${9*px}px ${colors.maxHair},
+      /* Row 10 - Hoodie with arms */
+      0 ${10*px}px ${colors.maxHoodie}, ${px}px ${10*px}px ${colors.maxHoodie}, ${2*px}px ${10*px}px ${colors.maxHoodie},
+      ${3*px}px ${10*px}px ${colors.maxHoodie}, ${4*px}px ${10*px}px ${colors.maxHoodie}, ${5*px}px ${10*px}px ${colors.maxHoodie},
+      ${6*px}px ${10*px}px ${colors.maxHoodie}, ${7*px}px ${10*px}px ${colors.maxHoodie},
+      /* Row 11 - Hoodie */
+      0 ${11*px}px ${colors.maxSkin}, ${px}px ${11*px}px ${colors.maxHoodie}, ${2*px}px ${11*px}px ${colors.maxHoodie},
+      ${3*px}px ${11*px}px ${colors.maxHoodie}, ${4*px}px ${11*px}px ${colors.maxHoodie}, ${5*px}px ${11*px}px ${colors.maxHoodie},
+      ${6*px}px ${11*px}px ${colors.maxHoodie}, ${7*px}px ${11*px}px ${colors.maxSkin},
+      /* Row 12 - Jeans */
+      ${px}px ${12*px}px ${colors.hopperHair}, ${2*px}px ${12*px}px ${colors.hopperHair},
+      ${3*px}px ${12*px}px ${colors.hopperHair}, ${4*px}px ${12*px}px ${colors.hopperHair},
+      ${5*px}px ${12*px}px ${colors.hopperHair}, ${6*px}px ${12*px}px ${colors.hopperHair},
+      /* Row 13 - Jeans */
+      ${px}px ${13*px}px ${colors.hopperHair}, ${2*px}px ${13*px}px ${colors.hopperHair},
+      ${3*px}px ${13*px}px ${colors.hopperHair}, ${4*px}px ${13*px}px ${colors.hopperHair},
+      ${5*px}px ${13*px}px ${colors.hopperHair}, ${6*px}px ${13*px}px ${colors.hopperHair},
+      /* Row 14 - Legs */
+      ${px}px ${14*px}px ${colors.hopperHair}, ${2*px}px ${14*px}px ${colors.hopperHair},
+      ${5*px}px ${14*px}px ${colors.hopperHair}, ${6*px}px ${14*px}px ${colors.hopperHair},
+      /* Row 15 - Sneakers */
+      ${px}px ${15*px}px ${colors.maxHair}, ${2*px}px ${15*px}px ${colors.maxShirt},
+      ${5*px}px ${15*px}px ${colors.maxShirt}, ${6*px}px ${15*px}px ${colors.maxHair}
     `,
   },
 };
@@ -222,7 +316,7 @@ const App = () => {
         <div className="flex justify-center gap-16">
           {/* Hopper */}
           <div className="flex flex-col items-center">
-            <div className="mb-4 relative" style={{ width: 32, height: 32 }}>
+            <div className="mb-4 relative" style={{ width: 32, height: 64 }}>
               <div style={pixelArt.hopper} />
             </div>
             <p className="text-red-500 font-semibold">Hopper</p>
@@ -231,7 +325,7 @@ const App = () => {
 
           {/* Eleven */}
           <div className="flex flex-col items-center">
-            <div className="mb-4 relative" style={{ width: 32, height: 32 }}>
+            <div className="mb-4 relative" style={{ width: 32, height: 64 }}>
               <div style={pixelArt.eleven} />
             </div>
             <p className="text-white font-semibold">Eleven</p>
@@ -240,7 +334,7 @@ const App = () => {
 
           {/* Max */}
           <div className="flex flex-col items-center">
-            <div className="mb-4 relative" style={{ width: 32, height: 32 }}>
+            <div className="mb-4 relative" style={{ width: 32, height: 64 }}>
               <div style={pixelArt.max} />
             </div>
             <p className="text-white font-semibold">Max</p>
