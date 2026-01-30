@@ -29,6 +29,9 @@ const Dashboard = () => {
     return "eleven";
   };
 
+  // Guard for TypeScript (PrivateRoute guarantees session exists)
+  if (!session) return null;
+
   return (
     <section className="max-w-4xl mx-auto px-4 py-12">
       {/* Header */}
