@@ -19,6 +19,7 @@ type User = {
   lastName: string;
   email: string;
   id: string;
+  role: "user" | "admin";
 } | null;
 
 interface SignupResult {
@@ -85,24 +86,23 @@ export const AuthContextProvider = ({
     }
   };
 
-  /*
-   * Why isMounted?
-   * --------------
-   * Prevents "state update on unmounted component" errors.
-   *
-   * Problem: If user navigates away while async operations (like fetchUserRole)
-   * are still running, those operations will try to call setSession() on a
-   * component that no longer exists → causes errors/memory leaks.
-   *
-   * Solution: Track if component is still mounted. Only call setState if it is.
-   * When component unmounts, the cleanup function sets isMounted = false.
-   *
-   * Timeline:
-   * 1. Mount → isMounted = true
-   * 2. Start async fetch
-   * 3. User navigates away → cleanup runs → isMounted = false
-   * 4. Async finishes → checks isMounted → false → skips setState ✓
-   */
+  const fetchUserRole = async (userId: string): Promise<"user" | "admin"> => {
+    try {
+      const { data: profile, error } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", userId)
+        .single();
+
+      if (error) {
+        console.error("Error fetching role:", error);
+        return "user";
+      }
+      return (profile?.role as "user" | "admin") ?? "user";
+    } catch {
+      return "user";
+    }
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -119,13 +119,14 @@ export const AuthContextProvider = ({
       if (session?.user) {
         const userData = session.user;
 
-        // console.log(userData);
+        const userole = await fetchUserRole(session.user.id);
 
         const user: User = {
           firstName: userData.user_metadata.first_name,
           lastName: userData.user_metadata.last_name,
           email: userData.user_metadata.email,
           id: userData.id,
+          role: userole,
         };
 
         setSession(user);
@@ -139,19 +140,21 @@ export const AuthContextProvider = ({
     initSession();
 
     const { data: authListener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
+      async (_event, session) => {
         if (!isMounted) return;
         if (session) {
+          const userRole = await fetchUserRole(session.user.id);
           const user: User = {
             firstName: session.user.user_metadata.first_name,
             lastName: session.user.user_metadata.last_name,
             email: session.user.user_metadata.email,
             id: session.user.id,
+            role: userRole,
           };
           setSession(user);
-        }else{
-          setSession(null)
-          setLoading(false)
+        } else {
+          setSession(null);
+          setLoading(false);
         }
       },
     );
