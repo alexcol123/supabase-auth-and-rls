@@ -22,11 +22,11 @@ const Dashboard = () => {
 
   // Determine which character to show based on user's first name
   const getCharacter = () => {
-    const name = session?.firstName?.toLowerCase();
-    if (name === "jim" || name === "hopper") return "hopper";
-    if (name === "eleven" || name === "el" || name === "jane") return "eleven";
-    if (name === "max" || name === "maxine") return "max";
-    // Default based on role or random
+    const name = session?.firstName?.toLowerCase() || "";
+    if (name.includes("jim") || name.includes("hopper")) return "hopper";
+    if (name.includes("eleven")) return "eleven";
+    if (name.includes("max")) return "max";
+    // Default
     return "eleven";
   };
 
