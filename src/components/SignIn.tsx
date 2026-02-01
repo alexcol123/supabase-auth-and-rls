@@ -1,16 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../Context/AuthContext";
 import { PixelCharacterGroup } from "./PixelArt";
 
 const SignIn = () => {
   const navigate = useNavigate();
-  const { signIn } = UserAuth();
+  const { signIn, session } = UserAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // Redirect when session becomes available
+  useEffect(() => {
+    if (session) {
+      navigate("/dashboard");
+    }
+  }, [session, navigate]);
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,13 +28,11 @@ const SignIn = () => {
 
       if (!result.success) {
         setError(result.error || "An unknown error occurred");
+        setIsLoading(false);
       }
-      if (result.success) {
-        navigate("/dashboard");
-      }
+      // Don't navigate here - let the useEffect handle it when session updates
     } catch {
       setError("An unexpected error occurred");
-    } finally {
       setIsLoading(false);
     }
   };

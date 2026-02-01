@@ -117,27 +117,35 @@ export const AuthContextProvider = ({
 
         if (session?.user) {
           const userData = session.user;
-          const userRole = await fetchUserRole(session.user.id);
 
+          // Set session immediately with default role
           const user: User = {
             firstName: userData.user_metadata.first_name,
             lastName: userData.user_metadata.last_name,
             email: userData.user_metadata.email,
             id: userData.id,
-            role: userRole,
+            role: "user", // Default role
           };
 
           setSession(user);
+          setLoading(false);
+
+          // Fetch actual role in background and update
+          fetchUserRole(session.user.id).then((userRole) => {
+            if (isMounted && userRole !== "user") {
+              setSession((prev) =>
+                prev ? { ...prev, role: userRole } : prev
+              );
+            }
+          });
         } else {
           setSession(null);
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error initializing session:", error);
         setSession(null);
-      } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
+        setLoading(false);
       }
     };
 
@@ -147,16 +155,25 @@ export const AuthContextProvider = ({
       async (_event, session) => {
         if (!isMounted) return;
         if (session) {
-          const userRole = await fetchUserRole(session.user.id);
+          // Set session immediately with default role so navigation can happen
           const user: User = {
             firstName: session.user.user_metadata.first_name,
             lastName: session.user.user_metadata.last_name,
             email: session.user.user_metadata.email,
             id: session.user.id,
-            role: userRole,
+            role: "user", // Default role
           };
           setSession(user);
           setLoading(false);
+
+          // Fetch actual role in background and update
+          fetchUserRole(session.user.id).then((userRole) => {
+            if (isMounted && userRole !== "user") {
+              setSession((prev) =>
+                prev ? { ...prev, role: userRole } : prev
+              );
+            }
+          });
         } else {
           setSession(null);
           setLoading(false);

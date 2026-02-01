@@ -1,3 +1,17 @@
+// =============================================================================
+//  🎉 DASHBOARD-COMPLETED.TSX - BACKUP FILE
+// =============================================================================
+//
+//  This is the COMPLETED version of Dashboard.tsx with all features working.
+//
+//  HOW TO USE:
+//  If you messed up Dashboard.tsx, just copy this entire file's contents
+//  and paste it into Dashboard.tsx to get back on track!
+//
+//  Or rename this file to Dashboard.tsx (and delete/rename the broken one).
+//
+// =============================================================================
+
 import { useEffect, useState } from "react";
 import { UserAuth } from "../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
